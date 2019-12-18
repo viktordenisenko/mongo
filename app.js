@@ -1,4 +1,4 @@
-// Thord party libraries
+// Third party libraries
 
 const express = require("express");
 const cors = require("cors");
@@ -6,6 +6,11 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 // Require MongoDB connection and Models
 require("./config/db");
+
+// require Controllers
+const UsersController = require("./controllers/UsersController");
+const ProductsController = require("./controllers/ProductsController");
+const CategoriesController = require("./controllers/CategoriesController");
 
 
 // Initialize express
@@ -20,32 +25,46 @@ app.use(cors());
 app.get("/",( req, res ) => {
     res.send("ok");
 });
-app.get("/users",(req,res) => {
-    User.find({}, (err, users) => {
-        res.json(users);
-    });
-});
-
-app.get("/users/:userId",(req,res) => {
-    const userId = req.params.userId;
- // User.findById(req.params.userId)
-    User.findOne({_id: userId}, (err, users) => {
-        res.json(users);
-    });
-});
 
 
-app.post("/users", (req,res) => {
-    const u = new User ({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email
-    });
-    u.save().then(() => {
-        res.json({
-            message: "User Created"
-        });
-    });
-});
+// sta routes pote den vazoyme parentheseis gia na min ekteleitai i function / tha ekteleitai mono otan tha mpainei kapoios sta route
+app.get("/users", UsersController.list);
+
+app.get("/users/:userId", UsersController.getOne);
+
+
+app.post("/users", UsersController.create );
+
+app.delete("/users/:userId", UsersController.deleteUser );
+
+app.put("/users/:userId", UsersController.update );
+
+// Product routes ******************************************************
+
+app.get("/products", ProductsController.list);
+
+app.get("/products/:productId", ProductsController.getOne);
+
+
+app.post("/products", ProductsController.create );
+
+app.delete("/products/:productId", ProductsController.deleteProduct );
+
+app.put("/products/:productId", ProductsController.update );
+
+app.get("/products/category/:categoryId",ProductsController.listByCategory);
+
+// Category routes***********************************************************
+
+app.get("/category", CategoriesController.list);
+
+app.get("/category/:categoryId", CategoriesController.getOne);
+
+
+app.post("/category", CategoriesController.create );
+
+app.delete("/category/:categoryId", CategoriesController.deleteCategory );
+
+app.put("/category/:categoryId", CategoriesController.update );
 
 
