@@ -1,15 +1,14 @@
 
 const list = (req,res) => {
-    User.find({}, (err, products) => {
-        res.json(products);
+    User.find({}, (err, users) => {
+        res.json(users);
     });
 };
 
 const getOne = (req,res) => {
-    const productId = req.params.productId;
-    // User.findById(req.params.userId)
-    User.findOne({_id: productId}, (err, products) => {
-        res.json(products);
+    const userId = req.params.userId;
+    User.findOne({_id: userId}, (err, users) => {
+        res.json(users);
     });
 };
 
@@ -48,6 +47,8 @@ const update = (req, res) => {
             });
         });
 };
+
+
 
 
 module.exports = {

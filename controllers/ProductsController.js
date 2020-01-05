@@ -4,9 +4,10 @@ const list = (req,res) => {
     });
 };
 
+
+
 const getOne = (req,res) => {
     const productId = req.params.productId;
-    // User.findById(req.params.userId)
     Product.findOne({_id: productId}, (err, product) => {
         res.json(product);
     });
@@ -14,7 +15,7 @@ const getOne = (req,res) => {
 
 const create = (req,res) => {
     const pro = new Product ({
-        category: mongoose.Types.ObjectId,
+        category: req.body.category,
         title: req.body.title,
         miniDescription: req.body.miniDescription,
         description: req.body.description,
@@ -55,13 +56,13 @@ const update = (req, res) => {
             });
         });
 };
-
-const listByCategory = (req,res) => {
-    Product.find({category:req.params.categoryId}, (err) => {
-       res.json();
+const listByCategory = (req, res) => {
+    Product.find({category: req.params.categoryId}, (err, products) => {
+        res.json(products);
     });
-
 };
+
+
 
 
 module.exports = {

@@ -24,5 +24,12 @@ global.Product = mongoose.model("Product",{
 global.Category = mongoose.model("Category",{
     title: String
 })
-
-
+global.Department = mongoose.model("Department",{
+    name: String,
+    latitude: Number,
+    longitude: Number
+});
+global.Photo = mongoose.model("Photo", {
+   url : String,
+   sort: String
+});
