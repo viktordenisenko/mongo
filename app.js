@@ -43,7 +43,7 @@ app.put("/users/:userId", UsersController.update );
 
 // Product routes **********************************************
 
-
+app.post("/products/cart", ProductsController.listCart);
 app.get("/products", ProductsController.list);
 app.get("/products/:productId", ProductsController.getOne);
 app.post("/products", ProductsController.create );

@@ -1,19 +1,21 @@
-const list = (req,res) => {
-    Product.find({}, (err, product) => {
-        res.json(product);
-    });
+const list = async (req,res) => {
+   const products = await Product.find({}).populate("category").exec();
+   return res.json(products);
+};
+
+const listCart = async (req,res) => {
+    const products = await Product.find({_id: req.body.productIds}, "title price photo").exec();
+    return res.json(products);
 };
 
 
 
-const getOne = (req,res) => {
-    const productId = req.params.productId;
-    Product.findOne({_id: productId}, (err, product) => {
-        res.json(product);
-    });
+const getOne = async (req,res) => {
+   const product = await Product.findOne({_id: req.params.productId}).exec()
+       return  res.json(product);
 };
 
-const create = (req,res) => {
+const create = async (req,res) => {
     const pro = new Product ({
         category: req.body.category,
         title: req.body.title,
@@ -23,43 +25,39 @@ const create = (req,res) => {
         sale : req.body.sale,
         photo : req.body.photo
     });
-    pro.save().then(() => {
-        res.json({
+    await pro.save();
+       return  res.json({
             message: "Product Created"
         });
-    });
+
 };
-const deleteProduct = (req, res) => {
-    const productId = req.params.productId;
-    Product.deleteOne({_id: productId}, (err) => {
-        res.json({
-            message: "product deleted"
-        });
-    });
+const deleteProduct = async (req, res) => {
+
+    await Product.deleteOne({ _id:req.params.productId}).exec()
+       return  res.json({ message: "product deleted"});
+
 };
 
-const update = (req, res) => {
-    const productId = req.params.productId;
-    Product.updateOne({_id: productId},
+const update =  async (req, res) => {
+
+    await  Product.updateOne({ _id: req.params.productId },
         {
-            //category: mongoose.Types.ObjectId,
+            category: req.body.category,
             title: req.body.title,
             miniDescription: req.body.miniDescription,
             description: req.body.description,
             price : req.body.price,
             sale : req.body.sale,
             photo : req.body.photo
-        }
-        , (err) => {
-            res.json({
-                message: "product updated"
-            });
-        });
+        }).exec();
+
+            return res.json({message: "product updated"});
+
 };
-const listByCategory = (req, res) => {
-    Product.find({category: req.params.categoryId}, (err, products) => {
-        res.json(products);
-    });
+const listByCategory = async (req, res) => {
+   const product = await Product.find({category: req.params.categoryId}).exec()
+        return res.json(products);
+
 };
 
 
@@ -71,5 +69,6 @@ module.exports = {
     create,
     deleteProduct,
     update,
-    listByCategory
+    listByCategory,
+    listCart
 };
