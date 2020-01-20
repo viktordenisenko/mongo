@@ -55,11 +55,11 @@ app.get("/products/category/:categoryId",ProductsController.listByCategory);
 
 // Category routes  *******************************************
 
-app.get("/category", CategoriesController.list);
-app.get("/category/:categoryId", CategoriesController.getOne);
-app.post("/category", CategoriesController.create );
-app.delete("/category/:categoryId", CategoriesController.deleteCategory );
-app.put("/category/:categoryId", CategoriesController.update );
+app.get("/categories", CategoriesController.list);
+app.get("/categories/:categoryId", CategoriesController.getOne);
+app.post("/categories", CategoriesController.create );
+app.delete("/categories/:categoryId", CategoriesController.deleteCategory );
+app.put("/categories/:categoryId", CategoriesController.update );
 
 //Department routes **********************************
 

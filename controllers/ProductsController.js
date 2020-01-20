@@ -42,7 +42,7 @@ const update = (req, res) => {
     const productId = req.params.productId;
     Product.updateOne({_id: productId},
         {
-            category: mongoose.Types.ObjectId,
+            //category: mongoose.Types.ObjectId,
             title: req.body.title,
             miniDescription: req.body.miniDescription,
             description: req.body.description,
