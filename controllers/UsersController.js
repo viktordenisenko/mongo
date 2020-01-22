@@ -16,13 +16,20 @@ const create = (req,res) => {
     const u = new User ({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        email: req.body.email
+        email: req.body.email,
+        password: req.body.password
     });
-    u.save().then(() => {
+    u.save()
+        .then(() => {
         res.json({
             message: "User Created"
         });
-    });
+    })
+        .catch((err) => {
+            res.json({
+                message: 'user not created'
+            });
+        });
 };
 const deleteUser = (req, res) => {
     const userId = req.params.userId;
@@ -47,6 +54,9 @@ const update = (req, res) => {
             });
         });
 };
+
+
+
 
 
 

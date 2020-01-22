@@ -8,7 +8,7 @@ require('dotenv').config();
 require("./config/db");
 
 // require Controllers
-const UsersController = require("./controllers/UsersController");
+
 const ProductsController = require("./controllers/ProductsController");
 const CategoriesController = require("./controllers/CategoriesController");
 const DepartmentsController = require("./controllers/DepartmentsController");
@@ -32,28 +32,17 @@ app.get("/",( req, res ) => {
 // sta routes pote den vazoyme parentheseis gia na min ekteleitai
 // i function / tha ekteleitai mono otan tha mpainei kapoios sta routes
 
-
-// User routes ****************************************************
-app.get("/users", UsersController.list);
-app.get("/users/:userId", UsersController.getOne);
-app.post("/users", UsersController.create );
-app.delete("/users/:userId", UsersController.deleteUser );
-app.put("/users/:userId", UsersController.update );
+// User routes
+app.use('/users', require('./routes/admin/users'));
 
 
-// Product routes **********************************************
-
-app.post("/products/cart", ProductsController.listCart);
-app.get("/products", ProductsController.list);
-app.get("/products/:productId", ProductsController.getOne);
-app.post("/products", ProductsController.create );
-app.delete("/products/:productId", ProductsController.deleteProduct );
-app.put("/products/:productId", ProductsController.update );
-app.get("/products/category/:categoryId",ProductsController.listByCategory);
+// Product routes *******************admin***************************
+app.use('/products', require ('./routes/admin/products'));
 
 
 
-// Category routes  *******************************************
+
+// Category routes  ******************admin*************************
 
 app.get("/categories", CategoriesController.list);
 app.get("/categories/:categoryId", CategoriesController.getOne);
@@ -61,7 +50,7 @@ app.post("/categories", CategoriesController.create );
 app.delete("/categories/:categoryId", CategoriesController.deleteCategory );
 app.put("/categories/:categoryId", CategoriesController.update );
 
-//Department routes **********************************
+//Department routes ******************admin****************
 
 app.get("/departments", DepartmentsController.list);
 app.post("/departments", DepartmentsController.create);
