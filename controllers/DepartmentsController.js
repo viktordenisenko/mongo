@@ -1,48 +1,39 @@
 
-const list = (req, res)=> {
-    Department.find({},(err, departments) => {
+const list = async (req, res)=> {
+   const departments = await Department.find({}).exec();
         res.json(departments);
-    });
+
 };
 
-const create = (req,res) => {
+const create = async (req,res) => {
     const d = new Department ({
         name: req.body.name,
         latitude: req.body.latitude,
         longitude: req.body.longitude
     });
-    d.save().then(() => {
-        res.json({
-            message:"department created"
-        });
-    });
+    await d.save();
+        res.json({ message:"department created" });
+
 }
 
-const getOne = (req, res) => {
-    Department.findById(req.params.departmentId, (err, departments) => {
-        res.json(departments);
-    });
+const getOne = async  (req, res) => {
+     const department = await Department.findById(req.params.departmentId).exec();
+        res.json(department);
 }
 
-const deleteDep = (req, res) => {
-    Department.deleteOne({_id: req.params.departmentId}, (err) => {
-        res.json({
-            message:"department deleted"
-        });
-    });
+const deleteDep = async (req, res) => {
+    await Department.deleteOne({_id: req.params.departmentId}).exec();
+        res.json({ message:"department deleted" });
+
 }
-const updateDepartment = (req, res) => {
-    Department.updateOne({_id: req.params.departmentId}, {
+const updateDepartment = async (req, res) => {
+    await Department.updateOne({_id: req.params.departmentId}, {
         name: req.body.name,
         latitude: req.body.latitude,
         longitude: req.body.longitude
-    },
-        (err) => {
-        res.json({
-            message: "department updated"
-        });
+    }).exec();
 
-    });
+        res.json({ message: "department updated" });
 }
 
 

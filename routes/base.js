@@ -1,11 +1,11 @@
 const express = require('express');
 const route = express.Router();
 
-app.get("/admin",( req, res ) => {
-    res.send("Admin Area");
+route.get("/",( req, res ) => {
+    res.send("ok");
 });
 
-route.use('/admin', require ('./admin/admin'));
-route.use('/client', require ('./client/client'));
+route.use('/admin', require('./admin/admin'));
+route.use('/client', require('./client/client'));
 
 module.exports = route;

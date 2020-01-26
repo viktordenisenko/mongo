@@ -1,25 +1,24 @@
 
-const list = (req,res) => {
-    User.find({}, (err, users) => {
-        res.json(users);
-    });
+const list =  async (req,res) => {
+   const users = await User.find({}).exec();
+       return res.json(users);
+
 };
 
-const getOne = (req,res) => {
-    const userId = req.params.userId;
-    User.findOne({_id: userId}, (err, users) => {
-        res.json(users);
-    });
+const getOne =  async (req,res) => {
+   const user = await User.findOne({_id: req.params.userId}).exec();
+         return res.json(user);
+
 };
 
-const create = (req,res) => {
+const create = async (req,res) => {
     const u = new User ({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password
     });
-    u.save()
+    await u.save()
         .then(() => {
         res.json({
             message: "User Created"
@@ -31,28 +30,21 @@ const create = (req,res) => {
             });
         });
 };
-const deleteUser = (req, res) => {
-    const userId = req.params.userId;
-    User.deleteOne({_id: userId}, (err) => {
-        res.json({
-            message: "user deleted"
-        });
-    });
+const deleteUser = async (req, res) => {
+     await User.deleteOne({_id: req.params.userId}).exec();
+         return res.json({ message: "user deleted" });
 };
 
-const update = (req, res) => {
-    const userId = req.params.userId;
-    User.updateOne({_id: userId},
+const update = async (req, res) => {
+   await User.updateOne({_id: req.params.userId},
         {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email
-        }
-        , (err) => {
-            res.json({
-                message: "user updated"
-            });
-        });
+        })
+        .exec();
+        return res.json({ message: "user updated" });
+
 };
 
 

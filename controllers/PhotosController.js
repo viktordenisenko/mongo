@@ -1,43 +1,35 @@
-const list = (req,res) => {
-    Photo.find({}, (err, photos) => {
+const list = async (req,res) => {
+    const photos = await Photo.find({}).exec();
         res.json(photos);
-    });
 }
 
-const createPhoto = (req, res) => {
+const createPhoto = async  (req, res) => {
     const ph = new Photo({
         url: req.body.url,
         sort: req.body.sort
     });
-    ph.save().then(() => {
-        res.json({
-            message:"photo created"
-        });
-    });
+    await ph.save();
+        res.json({ message:"photo created" });
 }
-const deletePhoto = (req, res) => {
-    Photo.deleteOne({_id: req.params.photoId}, (err) => {
-        res.json({
-            message:"photo deleted"
-        });
-    });
+const deletePhoto = async (req, res) => {
+    await Photo.deleteOne({_id: req.params.photoId}).exec();
+          res.json({ message:"photo deleted" });
+
+
 }
-const getOne = (req, res) => {
-    Photo.findById(req.params.photoId , (err , photos) => {
-        res.json(photos);
-    })
+const getOne = async (req, res) => {
+    const photo = await Photo.findById(req.params.photoId).exec();
+         return res.json(photo);
+
 }
 
-const updatePhoto = (req, res ) => {
-    Photo.updateOne({ _id: req.params.photoId } , {
+const updatePhoto = async (req, res ) => {
+    await Photo.updateOne({ _id: req.params.photoId } , {
         url:req.body.url,
         sort:req.body.sort
-        }, (err) => {
-        res.json({
-            message: "photo updated"
-        });
+        }).exec();
+        res.json({ message: "photo updated" });
 
-        });
 }
 
 

@@ -4,7 +4,6 @@ const route = express.Router(); //apo tin vivliothiki express xrismopoioume mono
 
 
 
-// User routes **********************admin******************************
 route.get("/", UsersController.list);
 route.get("/:userId", UsersController.getOne);
 route.post("/", UsersController.create );

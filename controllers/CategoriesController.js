@@ -1,48 +1,31 @@
-const list = (req,res) => {
-    Category.find({}, (err, category) => {
-        res.json(category);
+const list = async (req,res) => {
+   const category = await Category.find({}).exec();
+      return  res.json(category);
+
+};
+
+const getOne = async (req,res) => {
+   const category = await Category.findOne({_id: req.params.categoryId}).exec();
+       return res.json(category);
+};
+
+const create = async (req,res) => {
+    const category = new Category ({ title: req.body.title });
+    await category.save().then(() => {
+        res.json({ message: "Category Created" });
     });
 };
 
-const getOne = (req,res) => {
-    const categoryId = req.params.categoryId;
-    Category.findOne({_id: categoryId}, (err, category) => {
-        res.json(category);
-    });
+
+const deleteCategory = async (req, res) => {
+   await Category.deleteOne({_id: req.params.categoryId}).exec();
+      return  res.json({ message: "category deleted" });
 };
 
-const create = (req,res) => {
-    const category = new Category ({
-        title: req.body.title,
-
-    });
-    category.save().then(() => {
-        res.json({
-            message: "Category Created"
-        });
-    });
-};
-const deleteCategory = (req, res) => {
-    const categoryId = req.params.categoryId;
-    Category.deleteOne({_id: categoryId}, (err) => {
-        res.json({
-            message: "category deleted"
-        });
-    });
-};
-
-const update = (req, res) => {
-    const categoryId = req.params.categoryId;
-    Category.updateOne({_id: categoryId},
-        {
-            title: req.body.title,
-
-        }
-        , (err) => {
-            res.json({
-                message: "Category updated"
-            });
-        });
+const update = async (req, res) => {
+   await Category.updateOne({_id: req.params.categoryId}, { title: req.body.title, })
+       .exec();
+        return  res.json({ message: "Category updated" });
 };
 
 

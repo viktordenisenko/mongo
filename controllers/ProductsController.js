@@ -3,7 +3,12 @@ const mongoose = require('mongoose');
 
 const list = async (req,res) => {
    const products = await Product.find({}).populate("category").exec();
-   return res.json(products);
+   res.json(products);
+};
+
+const listByCategory = async (req, res) => {
+    const products = await Product.find({category: req.params.categoryId}).exec();
+     res.json(products);
 };
 
 const listCart = async (req,res) => {
@@ -16,7 +21,7 @@ const listCart = async (req,res) => {
 const getOne = async (req,res) => {
     if (mongoose.Types.ObjectId.isValid(req.params.productId)) {
         const product = await Product
-            .findOne({_id: req.params.productId})
+            .findById(req.params.productId)
             .populate('category')
             .exec();
         return  res.json(product);
@@ -39,15 +44,11 @@ const create = async (req,res) => {
         photo : req.body.photo
     });
     await pro.save();
-       return  res.json({
-            message: "Product Created"
-        });
-
+       return  res.json({ message: "Product Created" });
 };
 const deleteProduct = async (req, res) => {
-
     await Product.deleteOne({ _id:req.params.productId}).exec();
-       return  res.json({ message: "product deleted"});
+       res.json({ message: "product deleted"});
 
 };
 
@@ -64,14 +65,10 @@ const update =  async (req, res) => {
             photo : req.body.photo
         }).exec();
 
-            return res.json({message: "product updated"});
+            res.json({ message: "product updated" });
 
 };
-const listByCategory = async (req, res) => {
-   const product = await Product.find({category: req.params.categoryId}).exec()
-        return res.json(products);
 
-};
 
 
 

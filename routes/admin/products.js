@@ -1,5 +1,5 @@
 const express = require('express');
-const ProductsController = require("../../controllers/ProductsController");
+const ProductsController = require('../../controllers/ProductsController');
 const route = express.Router(); //apo tin vivliothiki express xrismopoioume mono to router
 
 route.post("/cart", ProductsController.listCart);
@@ -13,3 +13,4 @@ route.get("/category/:categoryId",ProductsController.listByCategory);
 
 
 module.exports = route;
+
