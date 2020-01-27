@@ -1,8 +1,8 @@
 
+
 const list =  async (req,res) => {
    const users = await User.find({}).exec();
        return res.json(users);
-
 };
 
 const getOne =  async (req,res) => {
@@ -11,22 +11,25 @@ const getOne =  async (req,res) => {
 
 };
 
-const create = async (req,res) => {
-    const u = new User ({
+const create = (req, res) => {
+
+    const u = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password
     });
-    await u.save()
+
+        u.save()
         .then(() => {
-        res.json({
-            message: "User Created"
-        });
-    })
+            res.json({
+                message: "User created"
+            });
+        })
         .catch((err) => {
             res.json({
-                message: 'user not created'
+                message: "User Not created",
+                error: err
             });
         });
 };
@@ -40,7 +43,9 @@ const update = async (req, res) => {
         {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            email: req.body.email
+            email: req.body.email,
+            password: req.body.password
+
         })
         .exec();
         return res.json({ message: "user updated" });

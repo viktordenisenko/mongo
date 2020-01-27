@@ -23,16 +23,23 @@ const userSchema = mongoose.Schema({
         bcrypt: true
     },
     email: {
-        type : String , required: true
+        type : String ,
+        required: true
+    } ,
+    role: {
+        type: String,
+        required: true,
+        default : "client",
+        enum: ["client", "admin", "superUser"]
     }
 },
     {
     timestamps: true
     }
 );
-
-global.User = mongoose.model("User", userSchema);
 userSchema.plugin(bcrypt);
+global.User = mongoose.model("User", userSchema);
+
 
 ////////////// Collection Product ///////////////
 const productSchema = mongoose.Schema({
