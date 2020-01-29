@@ -1,8 +1,12 @@
 const express = require("express");
 const route = express.Router();
+const adminAuth = require('../../middlewares/adminAuth');
 
-route.get("/", (req, res) => {
-    res.send("Admin Area");
+route.get("/", adminAuth, (req, res) => {
+    res.json({
+        success: true,
+        message: 'Admin area'
+    });
 });
 route.use("/users", require('./users'));
 route.use("/products", require("./products"));
