@@ -8,6 +8,8 @@ route.get("/", adminAuth, (req, res) => {
         message: 'Admin area'
     });
 });
+
+route.use("/auth", require("./auth"));
 route.use("/users", require('./users'));
 route.use("/products", require("./products"));
 route.use("/categories", require("./categories"));

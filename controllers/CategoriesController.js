@@ -23,7 +23,8 @@ const deleteCategory = async (req, res) => {
 };
 
 const update = async (req, res) => {
-   await Category.updateOne({_id: req.params.categoryId}, { title: req.body.title, })
+   await Category.updateOne({_id: req.params.categoryId},
+       { title: req.body.title, })
        .exec();
         return  res.json({ message: "Category updated" });
 };

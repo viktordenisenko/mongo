@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 
 const list = async (req,res) => {
    const products = await Product.find({}).populate("category").exec();
-  /* res.json({
+   res.json({
        success: true,
        products: products
-   });*/
-  res.json(products);
+   });
+
 };
 
 const listByCategory = async (req, res) => {
