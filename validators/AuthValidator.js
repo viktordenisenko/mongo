@@ -11,8 +11,8 @@ const register = [
 ];
 
 const login = [
-    check('email').isEmail(),
-    check('password').isLength({ min: 6}),
+    check('email').isEmail().withMessage('Invalid value at email field'),
+    check('password').isLength({ min: 6}).withMessage('Password must be at least 6 characters'),
     checkErrors
 ];
 

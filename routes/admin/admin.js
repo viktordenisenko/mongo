@@ -11,7 +11,7 @@ route.get("/", adminAuth, (req, res) => {
 
 route.use("/auth", require("./auth"));
 route.use("/users", require('./users'));
-route.use("/products", require("./products"));
+route.use("/products", adminAuth, require("./products"));
 route.use("/categories", require("./categories"));
 route.use('/departments', require('./departments'));
 route.use('/photos', require('./photos'));

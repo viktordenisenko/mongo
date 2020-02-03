@@ -12,12 +12,18 @@ const list = async (req,res) => {
 
 const listByCategory = async (req, res) => {
     const products = await Product.find({category: req.params.categoryId}).exec();
-     res.json(products);
+     res.json({
+         success: true,
+         products: products
+     });
 };
 
 const listCart = async (req,res) => {
     const products = await Product.find({_id: req.body.productIds}, "title price photo").exec();
-    return res.json(products);
+    return res.json({
+        success: true,
+        products: products
+    });
 };
 
 
@@ -28,9 +34,13 @@ const getOne = async (req,res) => {
             .findById(req.params.productId)
             .populate('category')
             .exec();
-        return  res.json(product);
+        return  res.json({
+            success: true,
+            product: product
+        });
     } else {
         res.json( {
+            success: false,
             message: 'product not found'
         });
     }
@@ -48,11 +58,17 @@ const create = async (req,res) => {
         photo : req.body.photo
     });
     await pro.save();
-       return  res.json({ message: "Product Created" });
+       return  res.json({
+           success: true,
+           message: "Product Created"
+       });
 };
 const deleteProduct = async (req, res) => {
     await Product.deleteOne({ _id:req.params.productId}).exec();
-       res.json({ message: "product deleted"});
+       res.json({
+           success: true,
+           message: "product deleted"
+       });
 
 };
 
@@ -69,7 +85,9 @@ const update =  async (req, res) => {
             photo : req.body.photo
         }).exec();
 
-            res.json({ message: "product updated" });
+            res.json({
+                success: true,
+                message: "product updated" });
 
 };
 
