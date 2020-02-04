@@ -1,6 +1,9 @@
 const list = async (req,res) => {
     const photos = await Photo.find({}).exec();
-        res.json(photos);
+        res.json({
+            success: true,
+            photos: photos
+        });
 }
 
 const createPhoto = async  (req, res) => {
@@ -9,17 +12,26 @@ const createPhoto = async  (req, res) => {
         sort: req.body.sort
     });
     await ph.save();
-        res.json({ message:"photo created" });
+        res.json({
+            success: true,
+            message:"photo created"
+        });
 }
 const deletePhoto = async (req, res) => {
     await Photo.deleteOne({_id: req.params.photoId}).exec();
-          res.json({ message:"photo deleted" });
+          res.json({
+              success: true,
+              message:"photo deleted"
+          });
 
 
 }
 const getOne = async (req, res) => {
     const photo = await Photo.findById(req.params.photoId).exec();
-         return res.json(photo);
+         return res.json({
+             success: true,
+             photo: photo
+         });
 
 }
 
@@ -28,7 +40,10 @@ const updatePhoto = async (req, res ) => {
         url:req.body.url,
         sort:req.body.sort
         }).exec();
-        res.json({ message: "photo updated" });
+        res.json({
+            success: true,
+            message: "photo updated"
+        });
 
 }
 

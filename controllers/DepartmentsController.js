@@ -1,7 +1,10 @@
 
 const list = async (req, res)=> {
    const departments = await Department.find({}).exec();
-        res.json(departments);
+        res.json({
+            success: true,
+            departments: departments
+        });
 
 };
 
@@ -12,18 +15,27 @@ const create = async (req,res) => {
         longitude: req.body.longitude
     });
     await d.save();
-        res.json({ message:"department created" });
+        res.json({
+            success: true,
+            message:"department created"
+        });
 
 }
 
 const getOne = async  (req, res) => {
      const department = await Department.findById(req.params.departmentId).exec();
-        res.json(department);
+        res.json({
+            success: true,
+            department: department
+        });
 }
 
 const deleteDep = async (req, res) => {
     await Department.deleteOne({_id: req.params.departmentId}).exec();
-        res.json({ message:"department deleted" });
+        res.json({
+            success: true,
+            message:"department deleted"
+        });
 
 }
 const updateDepartment = async (req, res) => {
@@ -33,7 +45,10 @@ const updateDepartment = async (req, res) => {
         longitude: req.body.longitude
     }).exec();
 
-        res.json({ message: "department updated" });
+        res.json({
+            success: true,
+            message: "department updated"
+        });
 }
 
 
