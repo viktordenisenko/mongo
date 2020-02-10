@@ -5,6 +5,7 @@ const list = async (req,res) => {
    const products = await Product.find({}).populate("category").exec();
    res.json({
        success: true,
+       //userName: req.user.firstName,
        products: products
    });
 

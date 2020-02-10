@@ -119,8 +119,22 @@ const register = async (req , res) => {
         });
 }
 
+
+const checkToken = (req, res ) => {
+    res.json({
+        success: true,
+        user: {
+            _id: req.user._id,
+            firstName: req.user.firstName,
+            lastName: req.user.lastName,
+            email: req.user.email
+        }
+    });
+}
+
 module.exports = {
     login,
     register,
-    adminLogin
+    adminLogin,
+    checkToken
 }
