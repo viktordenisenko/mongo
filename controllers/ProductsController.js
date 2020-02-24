@@ -15,7 +15,15 @@ const listByCategory = async (req, res) => {
     const products = await Product.find({category: req.params.categoryId}).exec();
      res.json({
          success: true,
-         products: products
+         category: {
+             id:req.params.categoryId,
+             title: category.title
+         },
+         products: {
+             id: products._id,
+
+         }
+
      });
 };
 
