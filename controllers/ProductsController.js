@@ -15,15 +15,7 @@ const listByCategory = async (req, res) => {
     const products = await Product.find({category: req.params.categoryId}).exec();
      res.json({
          success: true,
-         category: {
-             id:req.params.categoryId,
-             title: category.title
-         },
-         products: {
-             id: products._id,
-
-         }
-
+         products: products
      });
 };
 
@@ -100,6 +92,16 @@ const update =  async (req, res) => {
 
 };
 
+const getProductByCategory = async (req, res) => {
+    const category = await Category.findById( req.params.categoryId ).exec();
+    const product = await Product.find({category: req.params.categoryId}).exec();
+     res.json({
+         success: true,
+         category: category,
+         product: product
+     });
+}
+
 
 
 
@@ -111,5 +113,6 @@ module.exports = {
     deleteProduct,
     update,
     listByCategory,
-    listCart
+    listCart,
+    getProductByCategory
 };

@@ -4,7 +4,6 @@ const route = express.Router();
 
 
 route.get("/", ( req, res ) => {
-
     res.json({
         success: true,
         message: 'Home page'
